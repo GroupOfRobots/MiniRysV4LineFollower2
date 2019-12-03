@@ -38,26 +38,20 @@ else()
 
 endif()
 
-set ( Motors_LIBRARIES libmotors.so )
-link_directories( RobotLineFollower/robot/libs/motors/build )
-include_directories(RobotLineFollower/robot/libs/motors/include)
-set ( Camera_LIBRARIES libcamera.so )
-link_directories( RobotLineFollower/robot/libs/camera/build )
-include_directories(RobotLineFollower/robot/libs/camera/include)
-set ( Udp_Communication_LIBRARIES libudp_comm.so )
-link_directories( RobotLineFollower/robot/libs/udp_comm/build )
-include_directories(RobotLineFollower/robot/libs/udp_comm/include)
-set ( Pid_LIBRARIES libpid.so )
-link_directories( RobotLineFollower/robot/libs/pid/build )
-include_directories(RobotLineFollower/robot/libs/pid/include)
-set ( Data_Saver_LIBRARIES libdata_saver.so )
-link_directories( RobotLineFollower/robot/libs/data_saver/build )
-include_directories(RobotLineFollower/robot/libs/data_saver/include)
+set(SOURCES src/main_server.cpp 
+            lib/bcm2835/
+            lib/camera/
+            lib/data_saver/
+            lib/imu/
+            lib/motors/
+            lib/pid/
+            lib/temperature/
+            lib/tof/
+            lib/udp_comm/
+            )
 
-
-add_executable(main_server src/main_server.cpp)
-target_link_libraries( main_server ${Boost_LIBRARIES} ${OpenCV_LIBS} ${Motors_LIBRARIES} ${Camera_LIBRARIES} ${Udp_Communication_LIBRARIES} ${Pid_LIBRARIES} ${Data_Saver_LIBRARIES})
-
+add_executable(main_server ${SOURCES})
+target_link_libraries( main_server ${Boost_LIBRARIES} ${OpenCV_LIBS})
 ament_target_dependencies(main_server rclcpp std_msgs)
 
 install(TARGETS
