@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import time
 from tmp102 import TMP102
 import rclpy

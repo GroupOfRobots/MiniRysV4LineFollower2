@@ -16,6 +16,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
@@ -37,6 +38,8 @@ else()
     message(STATUS ">>>> Found unknown distribution <<<<")
 
 endif()
+
+ament_python_install_package(lib/tmp/)
 
 set(SOURCES src/main.cpp 
             lib/bcm2835/bcm2835.c
@@ -63,5 +66,9 @@ ament_target_dependencies(main_server rclcpp std_msgs)
 install(TARGETS
   main_server
   DESTINATION lib/${PROJECT_NAME})
+
+install(PROGRAMS
+  lib/tmp/tmp_node.py
+  DESTINATION bin)
 
 ament_package()
