@@ -38,16 +38,22 @@ else()
 
 endif()
 
-set(SOURCES src/main_server.cpp 
-            lib/bcm2835/
-            lib/camera/
-            lib/data_saver/
-            lib/imu/
-            lib/motors/
-            lib/pid/
-            lib/temperature/
-            lib/tof/
-            lib/udp_comm/
+set(SOURCES src/main.cpp 
+            lib/bcm2835/bcm2835.c
+            lib/camera/CenterFinding.cpp
+            lib/camera/ContourFinding.cpp
+            lib/data_saver/DataSaver.cpp
+            lib/imu/LSM6DS3.cpp
+            lib/imu/filter.cpp
+            lib/motors/l6470.cpp
+            lib/motors/l6470commands.cpp
+            lib/motors/l6470config.cpp
+            lib/motors/l6470dump.cpp
+            lib/motors/l6470support.cpp
+            lib/motors/motors.cpp
+            lib/pid/Pid.cpp
+            lib/tof/VL53L1X.cpp
+            lib/udp_comm/UdpJpgFrameStreamer.cpp
             )
 
 add_executable(main_server ${SOURCES})

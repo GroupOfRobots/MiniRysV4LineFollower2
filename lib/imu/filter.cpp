@@ -5,7 +5,7 @@
  *      Author: dangield
  */
 
-#include "../include/filter.h"
+#include "filter.h"
 
 filter::filter(float angle, float x = 1, float hz = 100){
 	previousAngles[0] = angle;

@@ -9,7 +9,7 @@
 #include <sys/ioctl.h>			//Needed for I2C port
 #include <linux/i2c-dev.h>		//Needed for I2C port"
 #include <stdio.h>
-#include "../include/bcm2835.h"
+#include "../bcm2835/bcm2835.h"
 // Constructor ////////////////////////////////////////////////////////////////
 
 VL53L1X::VL53L1X(DistanceMode dist,uint8_t adr){

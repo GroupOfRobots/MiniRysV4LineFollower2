@@ -29,8 +29,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "../include/l6470.h"
-#include "../include/l6470constants.h"
+#include "l6470.h"
+#include "l6470constants.h"
 
 void L6470::configSyncPin(uint8_t pinFunc, uint8_t syncSteps) {
 	uint8_t syncPinConfig = (uint8_t) getParam(L6470_PARAM_STEP_MODE);

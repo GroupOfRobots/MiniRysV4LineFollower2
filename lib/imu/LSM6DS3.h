@@ -28,7 +28,7 @@ Distributed as-is; no warranty is given.
 #define __LSM6DS3IMU_H__
 
 #include "stdint.h"
-#include "bcm2835.h"
+#include "../bcm2835/bcm2835.h"
 
 #define I2C_MODE 0
 #define SPI_MODE 1

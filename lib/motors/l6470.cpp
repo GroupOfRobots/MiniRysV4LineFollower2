@@ -23,8 +23,8 @@
  * THE SOFTWARE.
  */
 
-#include "../include/l6470.h"
-#include "../include/l6470constants.h"
+#include "l6470.h"
+#include "l6470constants.h"
 
 L6470::~L6470(void) {
 }

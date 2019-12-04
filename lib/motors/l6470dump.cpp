@@ -26,7 +26,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#include "../include/l6470.h"
+#include "l6470.h"
 
 #define L6470_OCD_TH_STEP_MA	375
 #define L6470_OCD_TH_MIN_MA		375

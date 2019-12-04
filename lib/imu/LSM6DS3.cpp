@@ -32,7 +32,7 @@ Distributed as-is; no warranty is given.
 #include <linux/i2c-dev.h>		//Needed for I2C port
 #include <stdio.h>
 
-#include "../include/LSM6DS3.h"
+#include "LSM6DS3.h"
 #include "stdint.h"
 
 //****************************************************************************//

@@ -28,8 +28,8 @@
 
 #include <stdio.h>
 
-#include "../include/l6470.h"
-#include "../include/l6470constants.h"
+#include "l6470.h"
+#include "l6470constants.h"
 #define NDEBUG
 
 void L6470::setParam(TL6470ParamRegisters param, unsigned long value) {

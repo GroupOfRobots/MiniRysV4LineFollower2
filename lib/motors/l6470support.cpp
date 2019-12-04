@@ -32,7 +32,7 @@
 #include <stdio.h>
 #endif
 
-#include "../include/l6470.h"
+#include "l6470.h"
 
 static unsigned long ceil(float f) {
 	int i = (int) f;

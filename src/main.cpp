@@ -1,10 +1,9 @@
-#include "bcm2835.h"
-#include "tmp102.h"
-#include "l6470constants.h"
-#include "motors.h"
-#include "VL53L1X.h"
-#include "LSM6DS3.h"
-#include "filter.h"
+#include "../lib/bcm2835/bcm2835.h"
+#include "../lib/motors/l6470constants.h"
+#include "../lib/motors/motors.h"
+#include "../lib/tof/VL53L1X.h"
+#include "../lib/imu/LSM6DS3.h"
+#include "../lib/imu/filter.h"
 #include <csignal>
 #include <math.h>
 #include <fstream>
@@ -21,11 +20,11 @@
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
 #include <thread>
-#include "UdpJpgFrameStreamer.h"
-#include "ContourFinding.h"
-#include "CenterFinding.h"
-#include "Pid.h"
-#include "DataSaver.h"
+#include "../lib/udp_comm/UdpJpgFrameStreamer.h"
+#include "../lib/camera/ContourFinding.h"
+#include "../lib/camera/CenterFinding.h"
+#include "../lib/pid/Pid.h"
+#include "../lib/data_saver/DataSaver.h"
 using namespace cv;
 using namespace std;
 
@@ -46,7 +45,6 @@ using boost::asio::ip::udp;
 void stepperTest();
 void tofTest();
 void IMUtest();
-void TMPtest();
 void batteryTest();
 Motors *globalBoard;
 VL53L1X *globalSensors[10];
@@ -77,7 +75,6 @@ int main()
 
 	//IMUtest();
 	//delay(2000);
-	//TMPtest();
 	//batteryTest();
 	//stepperTest();
 	//-----------------------------------------------------
@@ -461,10 +458,4 @@ void IMUtest(){
 	printf(" Average Gyro Z = %f\n", sumgz/n);
 
 	SensorOne.close_i2c();
-}
-
-void TMPtest(){ 
-	tmp102 czujnik(0x48,"/dev/i2c-1");
-	printf("Rys temperature: %f \n",czujnik.readTemperature());
-
 }
