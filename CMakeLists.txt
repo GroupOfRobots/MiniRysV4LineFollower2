@@ -18,28 +18,13 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclpy REQUIRED)
 find_package(std_msgs REQUIRED)
-
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 find_package( Boost COMPONENTS system thread REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
-
-file(READ "/etc/issue" ETC_ISSUE)
-string(REGEX MATCH "Raspbian|Ubuntu" DIST ${ETC_ISSUE})
-
-if(DIST STREQUAL "Raspbian")
-    message(STATUS ">>>> Found Raspbian <<<<")
-
-elseif(DIST STREQUAL "Ubuntu")
-    message(STATUS ">>>> Found Ubuntu <<<<")
-
-else()
-    message(STATUS ">>>> Found unknown distribution <<<<")
-
-endif()
-
-ament_python_install_package(lib/tmp/)
+ament_python_install_package(lib/tmp)
 
 set(SOURCES src/main.cpp 
             lib/bcm2835/bcm2835.c
@@ -68,7 +53,8 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME})
 
 install(PROGRAMS
+  lib/tmp/tmp102.py
   lib/tmp/tmp_node.py
-  DESTINATION bin)
+  DESTINATION lib/${PROJECT_NAME})
 
 ament_package()

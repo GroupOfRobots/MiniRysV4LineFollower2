@@ -18,7 +18,7 @@ class TmpPublisher(Node):
 
     def timer_callback(self):
         msg = String()
-        msg.data = "Current temp: {:.1f}degF".format(tmp.readTemperature())
+        msg.data = "Current temp: {:.1f}degC".format(self.tmp.readTemperature())
         self.publisher_.publish(msg)
         self.get_logger().info('Publishing: "%s"' % msg.data)
         self.i += 1
