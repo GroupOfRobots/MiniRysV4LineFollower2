@@ -24,6 +24,7 @@ find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 find_package( Boost COMPONENTS system thread REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
+
 ament_python_install_package(lib/tmp)
 
 set(SOURCES src/main.cpp 
@@ -44,17 +45,23 @@ set(SOURCES src/main.cpp
             lib/udp_comm/UdpJpgFrameStreamer.cpp
             )
 
-add_executable(main_server ${SOURCES})
-target_link_libraries( main_server ${Boost_LIBRARIES} ${OpenCV_LIBS})
-ament_target_dependencies(main_server rclcpp std_msgs)
+add_executable(main ${SOURCES})
+target_link_libraries( main ${Boost_LIBRARIES} ${OpenCV_LIBS})
+ament_target_dependencies(main rclcpp std_msgs)
 
 install(TARGETS
-  main_server
+  main
   DESTINATION lib/${PROJECT_NAME})
 
 install(PROGRAMS
   lib/tmp/tmp102.py
   lib/tmp/tmp_node.py
   DESTINATION lib/${PROJECT_NAME})
+
+# install the launch directory
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
+)
 
 ament_package()
