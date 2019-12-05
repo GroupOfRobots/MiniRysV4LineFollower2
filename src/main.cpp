@@ -104,8 +104,7 @@ int main()
 
 	Mat src;
 	std::cout<<"Contour or center finding? (1/2)";
-	int method;
-	std::cin>>method;
+	int method = 1;
 
 	//sprawdzenie czy wczytano poprawnie
 	if (!clipCapture.isOpened())
