@@ -9,3 +9,6 @@ Package of line follower functionality under ROS2 environment.
 
 ## Parameters
 All parameters can be changed in files in `yaml` directory.
+
+### TO DO
+Separate publishers and parameter server to independent nodes.
