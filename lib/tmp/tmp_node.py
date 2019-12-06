@@ -26,7 +26,6 @@ class TmpPublisher(Node):
         msg = String()
         msg.data = "Current temp: {:.1f}deg".format(self.tmp.readTemperature()) + self.tmp_units
         self.publisher_.publish(msg)
-        self.get_logger().info('Publishing: "%s"' % msg.data)
         self.i += 1
 
 def main(args=None):
