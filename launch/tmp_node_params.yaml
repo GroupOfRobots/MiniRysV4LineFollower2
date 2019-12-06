@@ -1,0 +1,4 @@
+tmp_publisher:
+    ros__parameters:
+        period: 0.5 #in seconds
+        units: 'C' #C-celcius, F-farenheit, K-kelvin, R-rankine
