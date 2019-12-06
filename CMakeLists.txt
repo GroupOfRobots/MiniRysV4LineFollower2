@@ -45,12 +45,20 @@ set(SOURCES src/main.cpp
             lib/udp_comm/UdpJpgFrameStreamer.cpp
             )
 
+set(SOURCES_TEST src/data_pub_example.cpp 
+            lib/data_publisher/DataPublisher.cpp
+            )
+
 add_executable(main ${SOURCES})
 target_link_libraries( main ${Boost_LIBRARIES} ${OpenCV_LIBS})
 ament_target_dependencies(main rclcpp std_msgs)
 
+add_executable(data_pub_example ${SOURCES_TEST})
+ament_target_dependencies(data_pub_example rclcpp std_msgs)
+
 install(TARGETS
   main
+  data_pub_example
   DESTINATION lib/${PROJECT_NAME})
 
 install(PROGRAMS
