@@ -2,7 +2,7 @@
 
 using namespace std::chrono_literals;
 
-DataPublisher::DataPublisher(): Node("data_publisher"){
+DataPublisher::DataPublisher(): Node("data_publisher"), motor1_(0), motor2_(0), line_center_(0), img_center_(0){
 
     std::vector<std::string> param_vect{"K", "Td", "Ti", "publish_period", "control_period", "frame_rate", 
         "line_detect_method", "points_number", "resolution_factor"};
@@ -47,4 +47,11 @@ std::map <std::string, double> DataPublisher::get_params(){
         parameters_map.insert(std::pair<std::string, double>(parameter.get_name(), parameter.as_double()));
     }
     return parameters_map;
+}
+
+void DataPublisher::set_data(int motor1, int motor2, int line_center, int img_center){
+    motor1_ = motor1;
+    motor2_ = motor2;
+    line_center_ = line_center;
+    img_center_ = img_center;
 }

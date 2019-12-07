@@ -20,6 +20,8 @@ find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(builtin_interfaces REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 find_package( Boost COMPONENTS system thread REQUIRED)
@@ -70,6 +72,11 @@ install(PROGRAMS
 install(DIRECTORY
   launch
   DESTINATION share/${PROJECT_NAME}/
+)
+	
+rosidl_generate_interfaces(msg_files
+  "msg/ProcessData.msg"
+  DEPENDENCIES builtin_interfaces
 )
 
 ament_package()
