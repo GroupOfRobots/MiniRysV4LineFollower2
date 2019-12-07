@@ -16,5 +16,5 @@ class DataPublisher : public rclcpp::Node
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr control_publisher_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr img_data_publisher_;
-    size_t count_;
+    std::shared_ptr<rclcpp::SyncParametersClient> parameters_client_;
   };

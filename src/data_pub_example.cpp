@@ -7,8 +7,8 @@
 int main(int argc, char * argv[])
 {
     rclcpp::init(argc, argv);
-    DataPublisher data_publisher;
-    rclcpp::spin(std::make_shared<DataPublisher>());
+    std::shared_ptr<DataPublisher> data_publisher = std::make_shared<DataPublisher>();
+    rclcpp::spin(data_publisher);
     rclcpp::shutdown();
     return 0;
 }
