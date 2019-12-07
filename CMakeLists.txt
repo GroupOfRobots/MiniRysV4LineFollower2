@@ -29,6 +29,15 @@ include_directories(${Boost_INCLUDE_DIR})
 
 ament_python_install_package(lib/tmp)
 
+set(msg_files 
+  "msg/ProcessData.msg"
+  )
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+   ${msg_files}
+   DEPENDENCIES std_msgs
+)
+
 set(SOURCES src/main.cpp 
             lib/bcm2835/bcm2835.c
             lib/camera/CenterFinding.cpp
@@ -57,6 +66,7 @@ ament_target_dependencies(main rclcpp std_msgs)
 
 add_executable(data_pub_example ${SOURCES_TEST})
 ament_target_dependencies(data_pub_example rclcpp std_msgs)
+rosidl_target_interfaces(data_pub_example ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
 install(TARGETS
   main
@@ -72,11 +82,6 @@ install(PROGRAMS
 install(DIRECTORY
   launch
   DESTINATION share/${PROJECT_NAME}/
-)
-	
-rosidl_generate_interfaces(msg_files
-  "msg/ProcessData.msg"
-  DEPENDENCIES builtin_interfaces
 )
 
 ament_package()

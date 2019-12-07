@@ -22,8 +22,7 @@ DataPublisher::DataPublisher(): Node("data_publisher"), motor1_(0), motor2_(0), 
         RCLCPP_INFO(this->get_logger(), "service not available, waiting again...");
     }
 
-    control_publisher_ = this->create_publisher<std_msgs::msg::String>("control", 10);
-    img_data_publisher_ = this->create_publisher<std_msgs::msg::String>("line_data", 10);
+    data_publisher_ = this->create_publisher<robot_line_follower::msg::ProcessData>("process_data");
     
     timer_ = this->create_wall_timer(500ms, std::bind(&DataPublisher::timer_callback, this));
 }
@@ -31,13 +30,12 @@ DataPublisher::DataPublisher(): Node("data_publisher"), motor1_(0), motor2_(0), 
 
 void DataPublisher::timer_callback()
 {
-    auto control_message = std_msgs::msg::String();
-    control_message.data = "Control! ";
-    auto img_data_message = std_msgs::msg::String();
-    img_data_message.data = "Img data! ";
-
-    control_publisher_->publish(control_message);
-    img_data_publisher_->publish(img_data_message);
+    auto message = robot_line_follower::msg::ProcessData();
+    message.motor1 = motor1_;
+    message.motor2 = motor2_;
+    message.line_center = line_center_;
+    message.img_center = img_center_;
+    data_publisher_->publish(message);
 }
 
 
