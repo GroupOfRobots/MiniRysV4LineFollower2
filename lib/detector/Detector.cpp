@@ -22,7 +22,7 @@ Detector::~Detector(){
 
 void Detector::runDetection(){
 	while(1){
-		auto start1 = chrono::steady_clock::now();
+		//auto start1 = chrono::steady_clock::now();
 		auto start = chrono::steady_clock::now();
 		int duration;
 		cv::Mat src;
@@ -46,9 +46,9 @@ void Detector::runDetection(){
      	}
 
 		if(duration < acquisition_period_) std::this_thread::sleep_for(std::chrono::microseconds(acquisition_period_ - duration));
-		else std::cout<<"EXCEEDED REGULATION LOOP TIME BY: "<< duration - acquisition_period_ <<endl;
-		auto end1 = chrono::steady_clock::now();
-		std::cout<<"Loop time: "<< chrono::duration_cast<chrono::microseconds>(end1 - start1).count()<<endl;
+		//else std::cout<<"EXCEEDED REGULATION LOOP TIME BY: "<< duration - acquisition_period_ <<endl;
+		//auto end1 = chrono::steady_clock::now();
+		//std::cout<<"Loop time: "<< chrono::duration_cast<chrono::microseconds>(end1 - start1).count()<<endl;
 	}
 }
 
