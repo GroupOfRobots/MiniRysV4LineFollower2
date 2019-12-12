@@ -1,14 +1,14 @@
 #include "../lib/data_publisher/DataPublisher.h"
-#include <chrono>
-#include <memory>
+#include "../lib/detector/Detector.h"
 #include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
 
 int main(int argc, char * argv[])
 {
     rclcpp::init(argc, argv);
     std::shared_ptr<DataPublisher> data_publisher = std::make_shared<DataPublisher>();
-    
+    std::shared_ptr<Detector> detector = std::make_shared<Detector>(1.0/6.0, 5.0/6.0, 0.5);
+    detector->run();
+
     std::map<std::string, double> parameters_map = data_publisher->get_params();
     std::map<std::string, double>::iterator it;
     for ( it = parameters_map.begin(); it != parameters_map.end(); it++ )

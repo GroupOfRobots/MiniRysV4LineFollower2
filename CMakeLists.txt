@@ -57,6 +57,8 @@ set(SOURCES src/main.cpp
             )
 
 set(SOURCES_TEST src/data_pub_example.cpp 
+            lib/camera/ContourFinding.cpp
+            lib/detector/Detector.cpp
             lib/data_publisher/DataPublisher.cpp
             )
 
@@ -65,6 +67,7 @@ target_link_libraries( main ${Boost_LIBRARIES} ${OpenCV_LIBS})
 ament_target_dependencies(main rclcpp std_msgs)
 
 add_executable(data_pub_example ${SOURCES_TEST})
+target_link_libraries(data_pub_example ${Boost_LIBRARIES} ${OpenCV_LIBS})
 ament_target_dependencies(data_pub_example rclcpp std_msgs)
 rosidl_target_interfaces(data_pub_example ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
