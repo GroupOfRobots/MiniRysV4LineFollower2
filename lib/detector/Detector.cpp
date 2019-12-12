@@ -11,7 +11,7 @@ roi_up_limit_(roi_up_limit), roi_down_limit_(roi_down_limit), acquisition_period
 		exit(0);
 	}
 
-	contour_finder_ = std::make_shared<ContourFinding>(roi_up_limit,roi_up_limit);
+	contour_finder_ = std::make_shared<ContourFinding>(roi_up_limit,roi_down_limit);
 	contour_finder_->setScaleFactor(scale);
 	contour_finder_->setThreshold(threshold);
 }
