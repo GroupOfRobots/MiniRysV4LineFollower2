@@ -1,5 +1,6 @@
 #include "../lib/data_publisher/DataPublisher.h"
 #include "../lib/detector/Detector.h"
+#include "../lib/controller/Controller.h"
 #include "rclcpp/rclcpp.hpp"
 
 int main(int argc, char * argv[])
@@ -7,7 +8,9 @@ int main(int argc, char * argv[])
     rclcpp::init(argc, argv);
     std::shared_ptr<DataPublisher> data_publisher = std::make_shared<DataPublisher>();
     std::shared_ptr<Detector> detector = std::make_shared<Detector>(1.0/6.0, 5.0/6.0, 0.5);
+    std::shared_ptr<Controller> controller = std::make_shared<Controller>(0.3, 50, 0.05, 40, -70, 60, detector);
     detector->run();
+    controller->run();
 
     std::map<std::string, double> parameters_map = data_publisher->get_params();
     std::map<std::string, double>::iterator it;

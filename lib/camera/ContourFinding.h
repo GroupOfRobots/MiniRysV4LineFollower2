@@ -8,6 +8,9 @@
 using namespace cv;
 using namespace std;
 
+#ifndef CONTOUR_FINDING_H
+#define CONTOUR_FINDING_H
+
 class ContourFinding{
 	private:
 		double pointFactorToStartCutting;
@@ -45,3 +48,5 @@ class ContourFinding{
 		Mat drawPoints(vector<Point> centers);
 		
 };
+
+#endif

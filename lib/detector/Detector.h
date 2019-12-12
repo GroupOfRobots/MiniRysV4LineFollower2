@@ -16,6 +16,9 @@
 #include <thread>
 #include "../camera/ContourFinding.h"
 
+#ifndef DETECTOR_H
+#define DETECTOR_H
+
 class Detector {
 	private:
 		double roi_up_limit_;
@@ -39,3 +42,4 @@ class Detector {
 		void run();
 };
 
+#endif

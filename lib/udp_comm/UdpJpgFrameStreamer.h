@@ -11,6 +11,9 @@ using namespace cv;
 using namespace std;
 using boost::asio::ip::udp;
 
+#ifndef UDP_JPG_STREAMER_H
+#define UDP_JPG_STREAMER_H
+
 class UdpJpgFrameStreamer {
 	private:
 		int port;
@@ -33,3 +36,4 @@ class UdpJpgFrameStreamer {
 		void pushFrame(Mat frame); 
 };
 
+#endif

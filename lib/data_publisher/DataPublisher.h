@@ -6,6 +6,9 @@
 
 using namespace std::chrono_literals;
 
+#ifndef DATA_PUBLISHER_H
+#define DATA_PUBLISHER_H
+
 class DataPublisher : public rclcpp::Node
 {
   public:
@@ -23,4 +26,6 @@ class DataPublisher : public rclcpp::Node
     int motor2_;
     int line_center_; 
     int img_center_;
-  };
+};
+
+#endif

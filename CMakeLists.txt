@@ -59,7 +59,16 @@ set(SOURCES src/main.cpp
 set(SOURCES_TEST src/data_pub_example.cpp 
             lib/camera/ContourFinding.cpp
             lib/detector/Detector.cpp
+            lib/controller/Controller.cpp
             lib/data_publisher/DataPublisher.cpp
+            lib/bcm2835/bcm2835.c
+            lib/motors/l6470.cpp
+            lib/motors/l6470commands.cpp
+            lib/motors/l6470config.cpp
+            lib/motors/l6470dump.cpp
+            lib/motors/l6470support.cpp
+            lib/motors/motors.cpp
+            lib/pid/Pid.cpp
             )
 
 add_executable(main ${SOURCES})

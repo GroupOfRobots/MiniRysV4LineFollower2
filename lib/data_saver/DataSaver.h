@@ -8,6 +8,9 @@
 using namespace cv;
 using namespace std;
 
+#ifndef DATA_SAVER_H
+#define DATA_SAVER_H
+
 class DataSaver {
 	private:
 		string pathToSaveData;
@@ -25,3 +28,4 @@ class DataSaver {
 		void setData(Mat frame, int leftMotor, int rightMotor, int setPoint, int error, int exec_duration);
 };
 
+#endif

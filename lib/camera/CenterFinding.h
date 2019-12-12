@@ -8,6 +8,9 @@
 using namespace cv;
 using namespace std;
 
+#ifndef CENTER_FINDING_H
+#define CENTER_FINDING_H
+
 class CenterFinding{
 	private:
 		Point pointToStartCutting;
@@ -44,3 +47,5 @@ class CenterFinding{
 		Mat drawPoints(vector<Point> centers);
 		
 };
+
+#endif

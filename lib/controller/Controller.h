@@ -31,6 +31,9 @@
 #define GPIO_TOF_10 RPI_V2_GPIO_P1_37
 #define NDEBUG
 
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
+
 class Controller {
 	private:
 		int control_period_;
@@ -40,9 +43,9 @@ class Controller {
 		void runControl();
 		
 	public:
-		Controller(double K, double Ti, double Td, double T, int uWorkPoint, int uMin, int uMax, std::shared_ptr<Detector> detector, int control_period = 60000);
+		Controller(double K, double Ti, double Td, int uWorkPoint, int uMin, int uMax, std::shared_ptr<Detector> detector, int control_period = 60000);
 		~Controller();
-		setDetector()
 		void run();
 };
 
+#endif

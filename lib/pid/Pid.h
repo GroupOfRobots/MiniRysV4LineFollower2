@@ -4,6 +4,9 @@
 #include <cmath>
 using namespace std;
 
+#ifndef PID_H
+#define PID_H
+
 class Pid {
 	private:
 		int uMax;
@@ -23,3 +26,4 @@ class Pid {
 		std::pair<int, int> calculateControl(int processOutput);
 };
 
+#endif
