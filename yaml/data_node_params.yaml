@@ -1,11 +1,21 @@
+#all parameters must be double!
 data_publisher:
     ros__parameters:
-        K: 1.0
-        Td: 1000000.0
-        Ti: 0.0
-        publish_period: 500.0
-        control_period: 60.0
-        frame_rate: 100.0
-        line_detect_method: 1.0
+        K: 0.3
+        Td: 50.0
+        Ti: 0.05
+        const_vel: 40.0
+        vel_up_lim: 60.0
+        vel_down_lim: -70.0
+
+        line_detect_method: 1.0 #1-contour method, 2-center method
         points_number: 6.0
+        up_roi_boundary: 0.167
+        down_roi_boundary: 0.833
         resolution_factor: 0.5
+        detection_threshold: 50.0
+
+        publish_period: 60.0 # ms
+        detection_period: 60.0 # ms
+        control_period: 60.0 # ms
+        frame_rate: 100.0

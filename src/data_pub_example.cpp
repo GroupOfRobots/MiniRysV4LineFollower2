@@ -6,22 +6,29 @@
 int main(int argc, char * argv[])
 {
     rclcpp::init(argc, argv);
-    std::shared_ptr<DataPublisher> data_publisher = std::make_shared<DataPublisher>();
-    std::shared_ptr<Detector> detector = std::make_shared<Detector>(1.0/6.0, 5.0/6.0, 0.5);
-    std::shared_ptr<Controller> controller = std::make_shared<Controller>(0.3, 50, 0.05, 40, -70, 60, detector);
-    detector->run();
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));//wait for detector 
-    controller->run();
 
-    std::map<std::string, double> parameters_map = data_publisher->get_params();
+    std::shared_ptr<DataPublisher> data_publisher = std::make_shared<DataPublisher>();
+    std::map<std::string, double> params = data_publisher->get_params();
     std::map<std::string, double>::iterator it;
-    for ( it = parameters_map.begin(); it != parameters_map.end(); it++ )
+    for ( it = params.begin(); it != params.end(); it++ )
     {
         std::cout << it->first  // string (key)
         << ':'
         << it->second   // string's value 
         << std::endl ;
     }
+    
+    std::shared_ptr<Detector> detector = std::make_shared<Detector>(params["up_roi_boundary"], 
+        params["down_roi_boundary"], params["resolution_factor"], params["detection_threshold"], 
+        static_cast<int>(round(params["detection_period"]*1000)));//(1.0/6.0, 5.0/6.0, 0.5);
+    
+    std::shared_ptr<Controller> controller = std::make_shared<Controller>(params["K"], params["Ti"], params["Td"], 
+        params["const_vel"], params["vel_down_lim"], params["vel_up_lim"], detector, 
+        static_cast<int>(round(params["control_period"]*1000)));
+    
+    detector->run();
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));//wait for detector 
+    controller->run();
 
     rclcpp::spin(data_publisher);
     rclcpp::shutdown();

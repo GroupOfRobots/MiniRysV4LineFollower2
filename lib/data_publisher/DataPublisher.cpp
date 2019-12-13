@@ -4,14 +4,28 @@ using namespace std::chrono_literals;
 
 DataPublisher::DataPublisher(): Node("data_publisher"), motor1_(0), motor2_(0), line_center_(0), img_center_(0){
 
-    std::vector<std::string> param_vect{"K", "Td", "Ti", "publish_period", "control_period", "frame_rate", 
-        "line_detect_method", "points_number", "resolution_factor"};
-    parameters_ = param_vect;
-    
-    for (auto i : param_vect) this->declare_parameter(i);
+    std::vector<std::string> param_vect{
+        "K",
+        "Td", 
+        "Ti",
+        "const_vel",
+        "vel_up_lim",
+        "vel_down_lim",
+        "line_detect_method", 
+        "points_number", 
+        "up_roi_boundary", 
+        "down_roi_boundary", 
+        "resolution_factor", 
+        "detection_threshold", 
+        "publish_period", 
+        "detection_period", 
+        "control_period", 
+        "frame_rate"};
 
+    parameters_ = param_vect;
+    for (auto i : parameters_) this->declare_parameter(i);
     parameters_client_ = std::make_shared<rclcpp::SyncParametersClient>(this);
-    
+
     while (!parameters_client_->wait_for_service(1s)) {
         
         if (!rclcpp::ok()) {
