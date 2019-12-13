@@ -31,10 +31,10 @@ void Detector::runDetection(){
 		else
 		{	
 			contour_finder_->setFrame(src);
-
+			mtx_.lock();
 			line_centers_ = contour_finder_->findLineCenters();
 			frame_ = contour_finder_->drawPoints(line_centers_);
-
+			mtx_.unlock();
 			auto end = chrono::steady_clock::now();
 			duration = chrono::duration_cast<chrono::microseconds>(end - start).count();
      	}
@@ -43,15 +43,22 @@ void Detector::runDetection(){
 		//else std::cout<<"EXCEEDED REGULATION LOOP TIME BY: "<< duration - acquisition_period_ <<endl;
 		//auto end1 = chrono::steady_clock::now();
 		//std::cout<<"Loop time: "<< chrono::duration_cast<chrono::microseconds>(end1 - start1).count()<<endl;
+		//std::cout<<"Img center: "<< round(contour_finder_->getSourceFrame().cols/2)<<std::endl;
 	}
 }
 
 std::vector<Point> Detector::getLineCenters(){
-	return line_centers_;
+	mtx_.lock();
+	std::vector<Point> line_centers = line_centers_;
+	mtx_.unlock();
+	return line_centers;
 }
 
 cv::Mat Detector::getFrame(){
-	return frame_;
+	mtx_.lock();
+	cv::Mat frame = frame_;
+	mtx_.unlock();
+	return frame;
 }
 
 int Detector::getImageCenter(){

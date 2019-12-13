@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
 #include <thread>
+#include <mutex>
 #include "../camera/ContourFinding.h"
 
 #ifndef DETECTOR_H
@@ -30,6 +31,7 @@ class Detector {
 		std::shared_ptr<cv::VideoCapture> clip_capture_;
 		cv::Mat frame_;
 		std::vector<cv::Point> line_centers_;
+		std::mutex mtx_;
 		void runDetection();
 		
 		

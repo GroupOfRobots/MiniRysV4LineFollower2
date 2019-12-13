@@ -23,15 +23,16 @@ void Controller::runControl(){
 		pair<int, int> p; 
 		std::vector<cv::Point> centers = detector_->getLineCenters();
 		int center = detector_->getImageCenter();
+		if(centers.empty()) std::cout<<" Img center: "<<center<<std::endl;
+		else std::cout<<"Line center: "<<centers[0].x<<" Img center: "<<center<<std::endl;
 
 		pid_->setSetPoint(center);
 		if(centers.empty()) p = pair<int, int>(0, 0);
 		else p = pid_->calculateControl(centers[0].x);
-		board_->setSpeed(-p.first, -p.second);
+		//board_->setSpeed(-p.first, -p.second); //stops controller when no motors connected
 
 		auto end = chrono::steady_clock::now();
 		int duration = chrono::duration_cast<chrono::microseconds>(end - start).count();
-     	
 		if(duration < control_period_) std::this_thread::sleep_for(std::chrono::microseconds(control_period_ - duration));
 		else std::cout<<"EXCEEDED REGULATION LOOP TIME BY: "<< duration - control_period_ <<endl;
 		auto end1 = chrono::steady_clock::now();
