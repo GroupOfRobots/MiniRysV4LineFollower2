@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
 #include <thread>
+#include <mutex>
 
 #define GPIO_TOF_1 	RPI_V2_GPIO_P1_12
 #define GPIO_TOF_2 	RPI_V2_GPIO_P1_16
@@ -40,12 +41,17 @@ class Controller {
 		std::shared_ptr<Detector> detector_;
 		std::shared_ptr<Motors> board_;
 		std::shared_ptr<Pid> pid_; 
+		std::pair<int, int> control_;
+		std::vector<cv::Point> line_centers_;
+		int image_center_;
+		std::mutex mtx_;
 		void runControl();
 		
 	public:
 		Controller(double K, double Ti, double Td, int uWorkPoint, int uMin, int uMax, std::shared_ptr<Detector> detector, int control_period = 60000);
 		~Controller();
 		void run();
+		std::map<std::string, int> getProcessData();
 };
 
 #endif

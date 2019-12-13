@@ -2,7 +2,7 @@
 
 using namespace std::chrono_literals;
 
-DataPublisher::DataPublisher(): Node("data_publisher"), motor1_(0), motor2_(0), line_center_(0), img_center_(0){
+DataPublisher::DataPublisher(): Node("data_publisher") {
 
     std::vector<std::string> param_vect{
         "K",
@@ -44,12 +44,13 @@ DataPublisher::DataPublisher(): Node("data_publisher"), motor1_(0), motor2_(0), 
 
 void DataPublisher::timer_callback()
 {
-    auto message = robot_line_follower::msg::ProcessData();
-    message.motor1 = motor1_;
-    message.motor2 = motor2_;
-    message.line_center = line_center_;
-    message.img_center = img_center_;
-    data_publisher_->publish(message);
+    //std::map<std::string, int> process_data = controller_->getProcessData();
+    //auto message = robot_line_follower::msg::ProcessData();
+    //message.motor_left = process_data["motor_left"];
+    //message.motor_right = process_data["motor_right"];
+    //message.line_center =process_data["line_center"];
+    //message.img_center = process_data["img_center"];
+    //data_publisher_->publish(message);
 }
 
 
@@ -61,9 +62,6 @@ std::map <std::string, double> DataPublisher::get_params(){
     return parameters_map;
 }
 
-void DataPublisher::set_data(int motor1, int motor2, int line_center, int img_center){
-    motor1_ = motor1;
-    motor2_ = motor2;
-    line_center_ = line_center;
-    img_center_ = img_center;
+void DataPublisher::set_controller(std::shared_ptr<Controller> controller){
+    controller_ = controller;
 }

@@ -25,10 +25,12 @@ int main(int argc, char * argv[])
     std::shared_ptr<Controller> controller = std::make_shared<Controller>(params["K"], params["Ti"], params["Td"], 
         params["const_vel"], params["vel_down_lim"], params["vel_up_lim"], detector, 
         static_cast<int>(round(params["control_period"]*1000)));
-    
+
     detector->run();
     std::this_thread::sleep_for(std::chrono::milliseconds(500));//wait for detector 
     controller->run();
+
+    data_publisher->set_controller(controller);
 
     rclcpp::spin(data_publisher);
     rclcpp::shutdown();
