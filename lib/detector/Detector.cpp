@@ -30,8 +30,8 @@ void Detector::runDetection(){
 
 		else
 		{	
-			contour_finder_->setFrame(src);
 			mtx_.lock();
+			contour_finder_->setFrame(src);
 			line_centers_ = contour_finder_->findLineCenters();
 			frame_ = contour_finder_->drawPoints(line_centers_);
 			mtx_.unlock();
@@ -62,6 +62,9 @@ cv::Mat Detector::getFrame(){
 }
 
 int Detector::getImageCenter(){
+	mtx_.lock();
+	int center = round(contour_finder_->getSourceFrame().cols/2);
+	mtx_.unlock();
 	return round(contour_finder_->getSourceFrame().cols/2);
 }
 
