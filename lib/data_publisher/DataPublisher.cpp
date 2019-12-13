@@ -38,19 +38,19 @@ DataPublisher::DataPublisher(): Node("data_publisher") {
 
     data_publisher_ = this->create_publisher<robot_line_follower::msg::ProcessData>("process_data");
     
-    timer_ = this->create_wall_timer(500ms, std::bind(&DataPublisher::timer_callback, this));
+    timer_ = this->create_wall_timer(100ms, std::bind(&DataPublisher::timer_callback, this));
 }
 
 
 void DataPublisher::timer_callback()
 {
-    //std::map<std::string, int> process_data = controller_->getProcessData();
-    //auto message = robot_line_follower::msg::ProcessData();
-    //message.motor_left = process_data["motor_left"];
-    //message.motor_right = process_data["motor_right"];
-    //message.line_center =process_data["line_center"];
-    //message.img_center = process_data["img_center"];
-    //data_publisher_->publish(message);
+    std::map<std::string, int> process_data = controller_->getProcessData();
+    auto message = robot_line_follower::msg::ProcessData();
+    message.motor_left = process_data["motor_left"];
+    message.motor_right = process_data["motor_right"];
+    message.line_center =process_data["line_center"];
+    message.img_center = process_data["img_center"];
+    data_publisher_->publish(message);
 }
 
 

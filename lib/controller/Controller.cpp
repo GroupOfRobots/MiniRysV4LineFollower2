@@ -47,9 +47,9 @@ std::map<std::string, int> Controller::getProcessData(){
 	mtx_.lock();
 	process_data["motor_left"] = control_.first;
 	process_data["motor_right"] = control_.second;
-	process_data["line_center"] = line_centers_[0].x;
-  	if(line_centers_.empty()) process_data["img_center"] = 0;
-	else process_data["img_center"] = image_center_;
+	process_data["img_center"] = image_center_;
+	if(line_centers_.empty()) process_data["line_center"] = 0;
+	else process_data["line_center"] = line_centers_[0].x;
 	mtx_.unlock();
 
 	return process_data;
