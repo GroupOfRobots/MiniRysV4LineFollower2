@@ -20,6 +20,7 @@ find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 find_package(builtin_interfaces REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package( OpenCV REQUIRED )
@@ -36,6 +37,7 @@ set(msg_files
 rosidl_generate_interfaces(${PROJECT_NAME}
    ${msg_files}
    DEPENDENCIES std_msgs
+   DEPENDENCIES sensor_msgs
 )
 
 set(SOURCES src/main.cpp 
@@ -77,7 +79,7 @@ ament_target_dependencies(main rclcpp std_msgs)
 
 add_executable(data_pub_example ${SOURCES_TEST})
 target_link_libraries(data_pub_example ${Boost_LIBRARIES} ${OpenCV_LIBS})
-ament_target_dependencies(data_pub_example rclcpp std_msgs)
+ament_target_dependencies(data_pub_example rclcpp sensor_msgs)
 rosidl_target_interfaces(data_pub_example ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
 install(TARGETS

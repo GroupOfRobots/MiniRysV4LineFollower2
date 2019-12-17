@@ -37,8 +37,9 @@ DataPublisher::DataPublisher(): Node("data_publisher") {
     }
 
     data_publisher_ = this->create_publisher<robot_line_follower::msg::ProcessData>("process_data");
+    image_publisher_ = this->create_publisher<sensor_msgs::msg::Image>("image_data");
     
-    timer_ = this->create_wall_timer(100ms, std::bind(&DataPublisher::timer_callback, this));
+    timer_ = this->create_wall_timer(60ms, std::bind(&DataPublisher::timer_callback, this));
 }
 
 
@@ -51,6 +52,21 @@ void DataPublisher::timer_callback()
     message.line_center =process_data["line_center"];
     message.img_center = process_data["img_center"];
     data_publisher_->publish(message);
+
+    cv::Mat image = detector_->getFrame();
+    if(!image.empty() && image.cols != -1 && image.rows != -1){
+        vector<int> compression_params;
+        compression_params.push_back(1);//CV_IMWRITE_JPEG_QUALITY
+	    compression_params.push_back(80);
+        std::vector<uchar> buffer;
+        imencode(".jpg", image, buffer, compression_params);//czwarty parametr to kompresja obrazku
+        auto image_msg = sensor_msgs::msg::Image();
+        image_msg.height = image.rows;
+        image_msg.width = image.cols;
+        image_msg.encoding = "rgb8";
+        image_msg.data = buffer;
+        image_publisher_->publish(image_msg);
+    }
 }
 
 
@@ -64,4 +80,8 @@ std::map <std::string, double> DataPublisher::get_params(){
 
 void DataPublisher::set_controller(std::shared_ptr<Controller> controller){
     controller_ = controller;
+}
+
+void DataPublisher::set_detector(std::shared_ptr<Detector> detector){
+    detector_ = detector;
 }

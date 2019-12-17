@@ -31,6 +31,7 @@ int main(int argc, char * argv[])
     controller->run();
 
     data_publisher->set_controller(controller);
+    data_publisher->set_detector(detector);
 
     rclcpp::spin(data_publisher);
     rclcpp::shutdown();

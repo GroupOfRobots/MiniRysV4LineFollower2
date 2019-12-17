@@ -15,8 +15,8 @@ def generate_launch_description():
         full_path = full_path + '/' + path
 
     return LaunchDescription([
-	launch_ros.actions.Node(
-            package='robot_line_follower', node_executable='data_pub_example', output='screen',
+    launch_ros.actions.Node(
+            package=package, node_executable='data_pub_example', output='screen',
             parameters=[full_path + "/src/" + package + "/yaml/data_node_params.yaml"]),
 
     ])
