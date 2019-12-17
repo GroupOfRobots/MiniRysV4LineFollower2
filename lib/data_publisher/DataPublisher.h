@@ -6,6 +6,7 @@
 #include "../detector/Detector.h"
 #include "robot_line_follower/msg/process_data.hpp"
 #include <opencv2/opencv.hpp>
+#include "cv_bridge/cv_bridge.h"
 
 using namespace std::chrono_literals;
 
@@ -29,6 +30,7 @@ class DataPublisher : public rclcpp::Node
     std::shared_ptr<rclcpp::SyncParametersClient> parameters_client_;
     std::shared_ptr<Controller> controller_;
     std::shared_ptr<Detector> detector_;
+    cv_bridge::CvImage img_bridge;
 };
 
 #endif

@@ -24,9 +24,11 @@ find_package(sensor_msgs REQUIRED)
 find_package(builtin_interfaces REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package( OpenCV REQUIRED )
+find_package(cv_bridge REQUIRED)
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 find_package( Boost COMPONENTS system thread REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
+include_directories(include ${cv_bridge_INCLUDE_DIRS})
 
 ament_python_install_package(lib/tmp)
 
@@ -79,7 +81,7 @@ ament_target_dependencies(main rclcpp std_msgs)
 
 add_executable(data_pub_example ${SOURCES_TEST})
 target_link_libraries(data_pub_example ${Boost_LIBRARIES} ${OpenCV_LIBS})
-ament_target_dependencies(data_pub_example rclcpp sensor_msgs)
+ament_target_dependencies(data_pub_example rclcpp sensor_msgs cv_bridge)
 rosidl_target_interfaces(data_pub_example ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
 install(TARGETS

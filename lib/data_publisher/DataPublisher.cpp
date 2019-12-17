@@ -53,18 +53,12 @@ void DataPublisher::timer_callback()
     message.img_center = process_data["img_center"];
     data_publisher_->publish(message);
 
-    cv::Mat image = detector_->getFrame();
-    if(!image.empty() && image.cols != -1 && image.rows != -1){
-        vector<int> compression_params;
-        compression_params.push_back(1);//CV_IMWRITE_JPEG_QUALITY
-	    compression_params.push_back(80);
-        std::vector<uchar> buffer;
-        imencode(".jpg", image, buffer, compression_params);//czwarty parametr to kompresja obrazku
-        auto image_msg = sensor_msgs::msg::Image();
-        image_msg.height = image.rows;
-        image_msg.width = image.cols;
-        image_msg.encoding = "rgb8";
-        image_msg.data = buffer;
+    cv::Mat frame = detector_->getFrame();
+    if(!frame.empty() && frame.cols != -1 && frame.rows != -1){
+        std::shared_ptr<sensor_msgs::msg::Image> image_msg;
+        std_msgs::msg::Header header;
+        img_bridge = cv_bridge::CvImage(header, sensor_msgs::image_encodings::BGR8, frame);
+        image_msg = img_bridge.toImageMsg(); // from cv_bridge to sensor_msgs::msg::Image
         image_publisher_->publish(image_msg);
     }
 }
