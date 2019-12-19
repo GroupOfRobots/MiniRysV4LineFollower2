@@ -30,7 +30,8 @@ class DataPublisher : public rclcpp::Node
     std::shared_ptr<rclcpp::SyncParametersClient> parameters_client_;
     std::shared_ptr<Controller> controller_;
     std::shared_ptr<Detector> detector_;
-    cv_bridge::CvImage img_bridge;
+    cv_bridge::CvImage img_bridge_;
+    std::string frame_id_ = "camera";
 };
 
 #endif
