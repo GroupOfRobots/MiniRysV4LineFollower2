@@ -51,16 +51,19 @@ void DataPublisher::timer_callback()
     message.motor_right = process_data["motor_right"];
     message.line_center =process_data["line_center"];
     message.img_center = process_data["img_center"];
+    rclcpp::Time timestamp = this->get_clock()->now();
+    message.header.stamp = timestamp;
+    message.header.frame_id = process_data_id_;
     data_publisher_->publish(message);
 
     cv::Mat frame = detector_->getFrame();
     if(!frame.empty() && frame.cols != -1 && frame.rows != -1){
-        std::vector<int> compression_params;
-        std::vector<uchar> buffer;
-        compression_params.push_back(1);//CV_IMWRITE_JPEG_QUALITY
-	    compression_params.push_back(20);
-        imencode(".jpg", frame, buffer, compression_params);
-        frame = imdecode(buffer,0.2);
+        //std::vector<int> compression_params;
+        //std::vector<uchar> buffer;
+        //compression_params.push_back(1);//CV_IMWRITE_JPEG_QUALITY
+	    //compression_params.push_back(80);
+        //imencode(".jpg", frame, buffer, compression_params);
+        //frame = imdecode(buffer,1);
         std::shared_ptr<sensor_msgs::msg::Image> image_msg;
         std_msgs::msg::Header header;
         img_bridge_ = cv_bridge::CvImage(header, sensor_msgs::image_encodings::BGR8, frame);
