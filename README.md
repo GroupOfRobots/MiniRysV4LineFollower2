@@ -9,3 +9,7 @@ Package of line follower functionality under ROS2 environment.
 
 ## Parameters
 All parameters can be changed in files in `yaml` directory.
+
+## Requirements
+To use this package following package is required:
+* https://index.ros.org/p/cv_bridge/github-ros-perception-vision_opencv/
