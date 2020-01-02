@@ -11,7 +11,7 @@ class Decoder : public rclcpp::Node
   public:
     Decoder(): Node("decoder")
 	{
-    	//publisher_ = this->create_publisher<rclcpp::Publisher<sensor_msgs::msg::Image>("image");
+    	publisher_ = this->create_publisher<sensor_msgs::msg::Image>("image");
 		subscription_ = this->create_subscription<sensor_msgs::msg::CompressedImage>(
     	"compressed_image", 10, std::bind(&Decoder::topic_callback, this, _1));
     }
@@ -20,6 +20,8 @@ class Decoder : public rclcpp::Node
 		void topic_callback(const sensor_msgs::msg::CompressedImage::SharedPtr msg) const
     	{
     		cv::Mat image = cv::imdecode(cv::Mat(msg->data),1);
+		sensor_msgs::msg::Image::SharedPtr ptr = std::make_shared<sensor_msgs::msg::Image>();
+		
     		cv::imshow("view", image);
 			cv::waitKey(10);
     	}
