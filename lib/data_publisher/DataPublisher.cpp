@@ -19,8 +19,7 @@ DataPublisher::DataPublisher(): Node("data_publisher") {
         "detection_threshold", 
         "publish_period", 
         "detection_period", 
-        "control_period", 
-        "frame_rate"};
+        "control_period"};
 
     parameters_ = param_vect;
     for (auto i : parameters_) this->declare_parameter(i);
@@ -36,10 +35,11 @@ DataPublisher::DataPublisher(): Node("data_publisher") {
         RCLCPP_INFO(this->get_logger(), "service not available, waiting again...");
     }
 
+    double publish_period = parameters_client_->get_parameter("publish_period", 100.0);
     data_publisher_ = this->create_publisher<robot_line_follower::msg::ProcessData>("process_data");
     image_publisher_ = this->create_publisher<sensor_msgs::msg::CompressedImage>("compressed_image");
     
-    timer_ = this->create_wall_timer(100ms, std::bind(&DataPublisher::timer_callback, this));
+    timer_ = this->create_wall_timer(std::chrono::milliseconds(static_cast<int>(round(publish_period))), std::bind(&DataPublisher::timer_callback, this));
 }
 
 

@@ -8,14 +8,13 @@ data_publisher:
         vel_up_lim: 60.0
         vel_down_lim: -70.0
 
-        line_detect_method: 1.0 #1-contour method, 2-center method
-        points_number: 6.0
-        up_roi_boundary: 0.167
-        down_roi_boundary: 0.833
+        line_detect_method: 1.0 # 1-contour method, 2-center method - not implemented yet, mode no 1 is used
+        points_number: 6.0 # for mode no 2 - not implemented yet
+        up_roi_boundary: 0.167 # for mode no 1
+        down_roi_boundary: 0.833 # for mode no 1
         resolution_factor: 0.5
         detection_threshold: 50.0
 
-        publish_period: 60.0 # ms
+        publish_period: 60.0 # ms - give integer in double format 
         detection_period: 60.0 # ms
         control_period: 60.0 # ms
-        frame_rate: 100.0
