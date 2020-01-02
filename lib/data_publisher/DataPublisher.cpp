@@ -58,27 +58,12 @@ void DataPublisher::timer_callback()
 
     cv::Mat frame = detector_->getFrame();
     if(!frame.empty() && frame.cols != -1 && frame.rows != -1){
-        std::vector<int> compression_params;
-        std::vector<uchar> buffer;
-        compression_params.push_back(1);//CV_IMWRITE_JPEG_QUALITY
-	    compression_params.push_back(80);
-        imencode(".jpg", frame, buffer, compression_params);
-
-        //std::shared_ptr<sensor_msgs::msg::Image> image_msg;
-        //std::shared_ptr<sensor_msgs::msg::CompressedImage> image_msg;
         std_msgs::msg::Header header;
         rclcpp::Time timestamp = this->get_clock()->now();
         header.stamp = timestamp;
         header.frame_id = frame_id_;
         img_bridge_ = cv_bridge::CvImage(header, sensor_msgs::image_encodings::BGR8, frame);
-        //image_msg = img_bridge_.toImageMsg(); // from cv_bridge to sensor_msgs::msg::Image
-
         sensor_msgs::msg::CompressedImage::SharedPtr image_msg =img_bridge_.toCompressedImageMsg(cv_bridge::JPG);
-        //image_msg->format = "jpeg";
-        //image_msg->data = buffer;
-        //rclcpp::Time timestamp = this->get_clock()->now();
-        //image_msg->header.stamp = timestamp;
-        //image_msg->header.frame_id = frame_id_;
         image_publisher_->publish(image_msg);
     }
 }

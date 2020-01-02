@@ -75,6 +75,8 @@ set(SOURCES_TEST src/data_pub_example.cpp
             lib/pid/Pid.cpp
             )
 
+set(SOURCES_CLIENT src/client.cpp)
+
 add_executable(main ${SOURCES})
 target_link_libraries( main ${Boost_LIBRARIES} ${OpenCV_LIBS})
 ament_target_dependencies(main rclcpp std_msgs)
@@ -83,6 +85,10 @@ add_executable(data_pub_example ${SOURCES_TEST})
 target_link_libraries(data_pub_example ${Boost_LIBRARIES} ${OpenCV_LIBS})
 ament_target_dependencies(data_pub_example rclcpp sensor_msgs cv_bridge)
 rosidl_target_interfaces(data_pub_example ${PROJECT_NAME} "rosidl_typesupport_cpp")
+
+add_executable(client ${SOURCES_CLIENT})
+target_link_libraries(client ${OpenCV_LIBS})
+ament_target_dependencies(client rclcpp sensor_msgs)
 
 install(TARGETS
   main

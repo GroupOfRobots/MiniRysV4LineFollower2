@@ -32,7 +32,7 @@ class DataPublisher : public rclcpp::Node
     std::shared_ptr<Detector> detector_;
     cv_bridge::CvImage img_bridge_;
     std::string frame_id_ = "camera";
-     std::string process_data_id_ = "process_data";
+    std::string process_data_id_ = "process_data";
 };
 
 #endif
