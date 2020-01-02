@@ -91,6 +91,7 @@ target_link_libraries(client ${OpenCV_LIBS})
 ament_target_dependencies(client rclcpp sensor_msgs)
 
 install(TARGETS
+  client
   main
   data_pub_example
   DESTINATION lib/${PROJECT_NAME})
