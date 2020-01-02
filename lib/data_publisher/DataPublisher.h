@@ -24,7 +24,7 @@ class DataPublisher : public rclcpp::Node
   private:
     void timer_callback();
     rclcpp::TimerBase::SharedPtr timer_;
-    rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr image_publisher_;
+    rclcpp::Publisher<sensor_msgs::msg::CompressedImage>::SharedPtr image_publisher_;
     rclcpp::Publisher<robot_line_follower::msg::ProcessData>::SharedPtr data_publisher_;
     std::vector<std::string> parameters_;
     std::shared_ptr<rclcpp::SyncParametersClient> parameters_client_;
