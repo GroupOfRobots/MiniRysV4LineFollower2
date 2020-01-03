@@ -87,7 +87,7 @@ ament_target_dependencies(data_pub_example rclcpp sensor_msgs cv_bridge)
 rosidl_target_interfaces(data_pub_example ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
 add_executable(client ${SOURCES_CLIENT})
-target_link_libraries(client ${OpenCV_LIBS})
+target_link_libraries(client ${OpenCV_LIBS} ${Boost_LIBRARIES})
 ament_target_dependencies(client rclcpp sensor_msgs)
 
 install(TARGETS
