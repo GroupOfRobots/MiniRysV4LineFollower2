@@ -5,6 +5,7 @@ detector_(detector), control_period_(control_period), control_(std::make_pair(0,
 	
 	if (bcm2835_init() == 0) throw std::runtime_error("Unable to init the bmc2835\n");
 	pid_ = std::make_shared<Pid>(K, Ti, Td, static_cast<double>(control_period), uWorkPoint, uMin, uMax);
+	data_saver_ = std::make_shared<DataSaver>("robot_control_log", "test", "/home/ubuntu/", 1, 1, 1);
 	board_ = std::make_shared<Motors>(BCM2835_SPI_CS0, GPIO_RESET_OUT);
 	board_->setUp();
 	board_->resetPosition();
@@ -38,6 +39,8 @@ void Controller::runControl(){
 		else std::cout<<"EXCEEDED REGULATION LOOP TIME BY: "<< duration - control_period_ <<endl;
 		auto end1 = chrono::steady_clock::now();
 		std::cout<<"Loop time: "<< chrono::duration_cast<chrono::microseconds>(end1 - start1).count()<<endl;
+		if(!line_centers_.empty()) data_saver_->setDataToTxt(-control_.first, -control_.second, image_center_, image_center_ - line_centers_[0].x, duration);
+		else data_saver_->setDataToTxt(-control_.first, -control_.second, image_center_, 1000000, duration);
 	}
 }
 

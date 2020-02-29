@@ -64,6 +64,7 @@ set(SOURCES_TEST src/data_pub_example.cpp
             lib/camera/ContourFinding.cpp
             lib/detector/Detector.cpp
             lib/controller/Controller.cpp
+            lib/data_saver/DataSaver.cpp
             lib/data_publisher/DataPublisher.cpp
             lib/bcm2835/bcm2835.c
             lib/motors/l6470.cpp

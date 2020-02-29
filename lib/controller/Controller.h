@@ -3,6 +3,7 @@
 #include "../motors/motors.h"
 #include "../pid/Pid.h"
 #include "../detector/Detector.h"
+#include "../data_saver/DataSaver.h"
 #include <csignal>
 #include <math.h>
 #include <fstream>
@@ -41,6 +42,7 @@ class Controller {
 		std::shared_ptr<Detector> detector_;
 		std::shared_ptr<Motors> board_;
 		std::shared_ptr<Pid> pid_; 
+		std::shared_ptr<DataSaver> data_saver_;
 		std::pair<int, int> control_;
 		std::vector<cv::Point> line_centers_;
 		int image_center_;

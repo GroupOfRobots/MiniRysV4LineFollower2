@@ -20,11 +20,10 @@ void Detector::runDetection(){
 		auto start = chrono::steady_clock::now();
 		int duration;
 		cv::Mat src;
-
 		clip_capture_->read(src);
 		if (src.empty() || src.cols == -1 || src.rows == -1)
 		{
-		    	printf("No image data from clip\n");
+		    	std::cout<<"No image data from clip\n";
 		    	break;
 		}
 
