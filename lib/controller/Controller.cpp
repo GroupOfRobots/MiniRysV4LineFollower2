@@ -30,7 +30,7 @@ void Controller::runControl(){
 		else control_ = pid_->calculateControl(line_centers_[0].x);
 		if(line_centers_.empty()) std::cout<<" Img center: "<<image_center_<<std::endl;
 		else std::cout<<"Line center: "<<line_centers_[0].x<<" Img center: "<<image_center_<<std::endl;
-		//board_->setSpeed(-control_.first, -control_.second); //stops controller when no motors connected
+		board_->setSpeed(-control_.first, -control_.second); //stops controller when no motors connected
 		mtx_.unlock();
 
 		auto end = chrono::steady_clock::now();
