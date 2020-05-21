@@ -13,6 +13,8 @@ int main(){
   // Create a VideoCapture object and use camera to capture the video
   VideoCapture cap(0); 
   std::cout<<"OK0";
+  cap.set(CV_CAP_PROP_FRAME_HEIGHT, 240);
+  cap.set(CV_CAP_PROP_FRAME_WIDTH, 320);
   cap.set(CV_CAP_PROP_CONVERT_RGB, false);
   std::cout<<"OK1";
   // Check if camera opened successfully
