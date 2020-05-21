@@ -1,5 +1,5 @@
 std_msgs/Header header
-int32 motor_left
-int32 motor_right
-int32 line_center
-int32 img_center
+int32 left_motor_vel
+int32 right_motor_vel
+int32 line_center_x
+int32 img_center_x

@@ -47,10 +47,10 @@ void DataPublisher::timer_callback()
 {
     std::map<std::string, int> process_data = controller_->getProcessData();
     auto message = robot_line_follower::msg::ProcessData();
-    message.motor_left = process_data["motor_left"];
-    message.motor_right = process_data["motor_right"];
-    message.line_center =process_data["line_center"];
-    message.img_center = process_data["img_center"];
+    message.left_motor_vel = process_data["motor_left"];
+    message.right_motor_vel = process_data["motor_right"];
+    message.line_center_x = process_data["line_center"];
+    message.img_center_x = process_data["img_center"];
     rclcpp::Time timestamp = this->get_clock()->now();
     message.header.stamp = timestamp;
     message.header.frame_id = process_data_id_;
