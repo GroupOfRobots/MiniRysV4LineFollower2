@@ -4,6 +4,7 @@ Detector::Detector(double roi_up_limit, double roi_down_limit, double scale, int
 roi_up_limit_(roi_up_limit), roi_down_limit_(roi_down_limit), acquisition_period_(acquisition_period), threshold_(threshold), scale_(scale){
 
 	clip_capture_ = std::make_shared<cv::VideoCapture>(0);
+	clip_capture_->set(CV_CAP_PROP_CONVERT_RGB, false);
 	if (!clip_capture_->isOpened()) throw std::runtime_error("Could not open reference to clip\n");
 	contour_finder_ = std::make_shared<ContourFinding>(roi_up_limit,roi_down_limit);
 	contour_finder_->setScaleFactor(scale);
@@ -64,7 +65,7 @@ int Detector::getImageCenter(){
 	mtx_.lock();
 	int center = round(contour_finder_->getSourceFrame().cols/2);
 	mtx_.unlock();
-	return round(contour_finder_->getSourceFrame().cols/2);
+	return center;
 }
 
 void Detector::run(){

@@ -77,6 +77,7 @@ set(SOURCES_TEST src/data_pub_example.cpp
             )
 
 set(SOURCES_CLIENT src/client.cpp)
+set(SOURCES_YUV src/yuv.cpp)
 
 add_executable(main ${SOURCES})
 target_link_libraries( main ${Boost_LIBRARIES} ${OpenCV_LIBS})
@@ -91,8 +92,13 @@ add_executable(client ${SOURCES_CLIENT})
 target_link_libraries(client ${OpenCV_LIBS} ${Boost_LIBRARIES})
 ament_target_dependencies(client rclcpp sensor_msgs)
 
+add_executable(yuv ${SOURCES_YUV})
+target_link_libraries(yuv ${OpenCV_LIBS} ${Boost_LIBRARIES})
+ament_target_dependencies(yuv rclcpp std_msgs)
+
 install(TARGETS
   client
+  yuv
   main
   data_pub_example
   DESTINATION lib/${PROJECT_NAME})
