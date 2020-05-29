@@ -4,10 +4,14 @@ Detector::Detector(double roi_up_limit, double roi_down_limit, double scale, int
 roi_up_limit_(roi_up_limit), roi_down_limit_(roi_down_limit), acquisition_period_(acquisition_period), threshold_(threshold), scale_(scale){
 
 	clip_capture_ = std::make_shared<cv::VideoCapture>(0);
+	auto height = clip_capture_->get(CV_CAP_PROP_FRAME_HEIGHT);
+	auto width = clip_capture_->get(CV_CAP_PROP_FRAME_WIDTH);
 	clip_capture_->set(CV_CAP_PROP_CONVERT_RGB, false);
+	clip_capture_->set(CV_CAP_PROP_FRAME_HEIGHT, static_cast<int>(height*scale));
+  	clip_capture_->set(CV_CAP_PROP_FRAME_WIDTH, static_cast<int>(width*scale));
 	if (!clip_capture_->isOpened()) throw std::runtime_error("Could not open reference to clip\n");
 	contour_finder_ = std::make_shared<ContourFinding>(roi_up_limit,roi_down_limit);
-	contour_finder_->setScaleFactor(scale);
+	//contour_finder_->setScaleFactor(scale);
 	contour_finder_->setThreshold(threshold);
 }
 

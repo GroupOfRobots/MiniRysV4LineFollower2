@@ -55,10 +55,7 @@ void ContourFinding::cutImage(){
 }
 
 void ContourFinding::toGrayScale(){
-	std::vector<cv::Mat> planes(3);
-	cv::split(outputFrame, planes);
-	outputFrame = planes[0];
-	//cvtColor(outputFrame, outputFrame, cv::COLOR_RGB2GRAY);
+	cvtColor(outputFrame, outputFrame, cv::COLOR_BGR2GRAY);
 }
 
 void ContourFinding::useBlur(){
@@ -123,7 +120,7 @@ vector<Point> ContourFinding::findCenters(){
 }
 
 vector<Point> ContourFinding::findLineCenters(){
-	scaleImage();
+	//scaleImage();
 
 	cutImage();
 
