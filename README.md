@@ -1,5 +1,5 @@
 # robot_line_follower
-Package of line follower functionality under ROS2 environment. Tested on Ubuntu Bionic 18.04 from: https://jamesachambers.com/raspberry-pi-4-ubuntu-server-desktop-18-04-3-image-unofficial
+Package of line follower functionality under ROS2 environment. Tested on Raspberry Pi 4B with Ubuntu Bionic 18.04 from: https://jamesachambers.com/raspberry-pi-4-ubuntu-server-desktop-18-04-3-image-unofficial
 
 ## Running package on robot: 
 1. `cd <your_ws>` 
