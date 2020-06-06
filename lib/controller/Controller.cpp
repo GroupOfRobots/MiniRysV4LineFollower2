@@ -17,7 +17,7 @@ Controller::~Controller(){
 		std::cout<<"CONTROLLER TERMINATED"<<endl;
 }
 
-void Controller::runControl(){
+void Controller::run_control(){
 	while(1){
 		auto start1 = chrono::steady_clock::now();
 		auto start = chrono::steady_clock::now(); 
@@ -59,6 +59,6 @@ std::map<std::string, int> Controller::getProcessData(){
 }
 
 void Controller::run(){
-	std::thread detector(&Controller::runControl, this);
+	std::thread detector(&Controller::run_control, this);
 	detector.detach();
 }

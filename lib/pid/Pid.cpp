@@ -1,31 +1,21 @@
 #include "Pid.h"
 
-Pid::Pid(double K, double Ti, double Td, double T, int uWorkPoint, int uMin, int uMax){
-	this->K = K;
-	this->Ti = Ti;
-	this->Td = Td;
-	this->T = T/1000000; //conversion from microseconds to milliseconds
-	this->uMin = uMin;
-	this->uMax = uMax;
-	this->setPoint = 0;
-	this->uiPast = 0;
-	this->ePast = 0;
-	this->uWorkPoint = uWorkPoint;
+Pid::Pid(double k, double ti, double td, double t, int u_work_point, int u_min, int u_max) : 
+k_(k), ti_(ti), td_(td), t_(t/1000000), u_work_point_(u_work_point), u_min_(u_min), u_max_(u_max), set_point_(0), ui_past_(0), e_past_(0) {};
+
+void Pid::setSetPoint(int set_point){
+	set_point_ = set_point;
 }
 
-void Pid::setSetPoint(int setPoint){
-	this->setPoint = setPoint;
-}
-
-std::pair<int, int> Pid::calculateControl(int processOutput){
-	int e = setPoint - processOutput;
-	double up = K*e;
-	double ui = uiPast + (K/Ti) * T * (ePast+e)/2;
-	double ud = K*Td*(e-ePast)/T;
+std::pair<int, int> Pid::calculateControl(int process_output){
+	int e = set_point_ - process_output;
+	double up = k_*e;
+	double ui = ui_past_ + (k_ / ti_) * t_ * (e_past_ + e) / 2;
+	double ud = k_ * td_ * (e - e_past_) / t_;
 	int u = round(up + ui + ud);
-	ePast = e;
-	uiPast = ui;
-	if(u>uMax) u=uMax;
-	if(u<uMin) u=uMin;
-	return std::make_pair(uWorkPoint-u, uWorkPoint+u);
+	e_past_ = e;
+	ui_past_ = ui;
+	if(u > u_max_) u = u_max_;
+	if(u < u_min_) u = u_min_;
+	return std::make_pair(u_work_point_ - u, u_work_point_ + u);
 }

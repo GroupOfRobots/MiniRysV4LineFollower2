@@ -1,93 +1,72 @@
 #include "ContourFinding.h"
 
-ContourFinding::ContourFinding(double pointFactorToStartCutting, double pointFactorToFinishCutting){
-	this->pointFactorToStartCutting = pointFactorToStartCutting;
-	this->pointFactorToFinishCutting = pointFactorToFinishCutting;
-	pointToStartCutting = Point(0,outputFrame.rows*pointFactorToStartCutting);
-	pointToFinishCutting = Point(outputFrame.cols, outputFrame.rows*pointFactorToFinishCutting);
+ContourFinding::ContourFinding(double point_factor_to_start_cutting, double point_factor_to_finish_cutting){
+	this->point_factor_to_start_cutting_ = point_factor_to_start_cutting;
+	this->point_factor_to_finish_cutting_ = point_factor_to_finish_cutting;
+	point_to_start_cutting_ = Point(0,output_frame_.rows*point_factor_to_start_cutting);
+	point_to_finish_cutting_ = Point(output_frame_.cols, output_frame_.rows*point_factor_to_finish_cutting);
 }
 
-ContourFinding::ContourFinding(Mat frame, double pointFactorToStartCutting, double pointFactorToFinishCutting){
-	sourceFrame = frame;
-	outputFrame = frame;
-	this->pointFactorToStartCutting = pointFactorToStartCutting;
-	this->pointFactorToFinishCutting = pointFactorToFinishCutting;
-	pointToStartCutting = Point(0,outputFrame.rows*pointFactorToStartCutting);
-	pointToFinishCutting = Point(outputFrame.cols, outputFrame.rows*pointFactorToFinishCutting);
+ContourFinding::ContourFinding(Mat frame, double point_factor_to_start_cutting, double point_factor_to_finish_cutting){
+	source_frame_ = frame;
+	output_frame_ = frame;
+	this->point_factor_to_start_cutting_ = point_factor_to_start_cutting;
+	this->point_factor_to_finish_cutting_ = point_factor_to_finish_cutting;
+	point_to_start_cutting_ = Point(0,output_frame_.rows*point_factor_to_start_cutting);
+	point_to_finish_cutting_ = Point(output_frame_.cols, output_frame_.rows*point_factor_to_finish_cutting);
 }
 
 void ContourFinding::setFrame(Mat frame){
-	sourceFrame = frame;
-	outputFrame = frame;
-	contour.erase(contour.begin(),contour.end());
-	hierarchy.erase(hierarchy.begin(),hierarchy.end());
-	pointToStartCutting = Point(0,outputFrame.rows*pointFactorToStartCutting);
-	pointToFinishCutting = Point(outputFrame.cols, outputFrame.rows*pointFactorToFinishCutting);
+	source_frame_ = frame;
+	output_frame_ = frame;
+	contour_.erase(contour_.begin(), contour_.end());
+	point_to_start_cutting_ = Point(0, output_frame_.rows*point_factor_to_start_cutting_);
+	point_to_finish_cutting_ = Point(output_frame_.cols, output_frame_.rows*point_factor_to_finish_cutting_);
 }
 
 Mat ContourFinding::getSourceFrame(){
-	return sourceFrame;
+	return source_frame_;
 }
 
 Mat ContourFinding::getOutputFrame(){
-	return outputFrame;
+	return output_frame_;
 }
 
-void ContourFinding::setScaleFactor(double scaleFactor){
-	this->scaleFactor = scaleFactor;
+void ContourFinding::cut_image(){
+	Rect r(point_to_start_cutting_, point_to_finish_cutting_);
+	output_frame_ = output_frame_(r);
 }
 
-double ContourFinding::getScaleFactor(){
-	return this->scaleFactor;
+void ContourFinding::to_gray_scale(){
+	cvtColor(output_frame_, output_frame_, cv::COLOR_BGR2GRAY);
 }
 
-//przeskalowanie kaltki
-void ContourFinding::scaleImage(){
-	resize(outputFrame, outputFrame, Size(0,0), scaleFactor, scaleFactor, 2); //2->INTER_AREA_INTERPOLATION
-	resize(sourceFrame, sourceFrame, Size(0,0), scaleFactor, scaleFactor, 2); //2->INTER_AREA_INTERPOLATION
-	pointToStartCutting = Point(0,outputFrame.rows*pointFactorToStartCutting);
-	pointToFinishCutting = Point(outputFrame.cols, outputFrame.rows*pointFactorToFinishCutting);	
+void ContourFinding::erode_frame(Mat element){
+	erode(output_frame_, output_frame_, element);
 }
 
-void ContourFinding::cutImage(){
-	Rect r(pointToStartCutting, pointToFinishCutting);
-	outputFrame = outputFrame(r);
-}
-
-void ContourFinding::toGrayScale(){
-	cvtColor(outputFrame, outputFrame, cv::COLOR_BGR2GRAY);
-}
-
-void ContourFinding::useBlur(){
-	medianBlur (outputFrame, outputFrame, max_kernel_length);
-}
-
-void ContourFinding::erodeFrame(Mat element){
-	erode(outputFrame, outputFrame, element );
-}
-
-void ContourFinding::dilateFrame(Mat element){
-	dilate(outputFrame, outputFrame, element);
+void ContourFinding::dilate_frame(Mat element){
+	dilate(output_frame_, output_frame_, element);
 }
 
 void ContourFinding::setThreshold(int threshold){
-	this->binarize_threshold = threshold;
+	this->binarize_threshold_ = threshold;
 }
 
-void ContourFinding::thresholdFrame(){
-	threshold(outputFrame, outputFrame, binarize_threshold, 255, THRESH_BINARY_INV);
+void ContourFinding::threshold_frame(){
+	threshold(output_frame_, output_frame_, binarize_threshold_, 255, THRESH_BINARY_INV);
 }
 
-vector<Point> ContourFinding::findCenters(){
+vector<Point> ContourFinding::find_centers(){
 	vector<Point> centers;
 	vector<vector<Point>> contours;
-    	vector<Vec4i> hierarchy;
+    vector<Vec4i> hierarchy;
 
 	double largest_area = 0;
 	int largest_contour_index = 0;
 
 	//znalezienie konturów (najbardziej zewnętrznych)
-	findContours(outputFrame, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);    
+	findContours(output_frame_, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);    
 
 	//jeśli znaleziono jakiś kontur
 	if(!contours.empty()) {
@@ -102,8 +81,8 @@ vector<Point> ContourFinding::findCenters(){
     		}
 
 		vector<Point> contour = contours[largest_contour_index];
-		this->contour=contour;
-		this->hierarchy = hierarchy;
+		this->contour_=contour;
+
 		//wyliczenie momentów figury
 		Moments mu = moments(contours[largest_contour_index], false);
 
@@ -120,27 +99,23 @@ vector<Point> ContourFinding::findCenters(){
 }
 
 vector<Point> ContourFinding::findLineCenters(){
-	//scaleImage();
+	cut_image();
 
-	cutImage();
+	to_gray_scale();
 
-	toGrayScale();
+	Mat element = getStructuringElement( MORPH_RECT,Size( 2*max_kernel_size_ + 1, 2*max_kernel_size_+1 ),Point( max_kernel_size_, max_kernel_size_));
 
-	//useBlur();//commented, because might be unuseful
+	erode_frame(element);
 
-	Mat element = getStructuringElement( MORPH_RECT,Size( 2*max_kernel_size + 1, 2*max_kernel_size+1 ),Point( max_kernel_size, max_kernel_size ));
+	dilate_frame(element);
 
-	erodeFrame(element);
+	threshold_frame();
 
-	dilateFrame(element);
-
-	thresholdFrame();
-
-	return findCenters();
+	return find_centers();
 }
 
 Mat ContourFinding::drawPoints(vector<Point> centers){
-	Mat frame = sourceFrame.clone();
+	Mat frame = source_frame_.clone();
 	vector<vector<Point>> contours;
 	vector<Point> contour;
 
@@ -149,19 +124,20 @@ Mat ContourFinding::drawPoints(vector<Point> centers){
     Scalar colorContour(0, 255, 0);
 	
 	//przesunięcie konturu
-	for( int i = 0; i< this->contour.size(); i++ )
+	for( int i = 0; i< this->contour_.size(); i++ )
     {
-        contour.push_back(this->contour[i] + pointToStartCutting);
+        contour.push_back(this->contour_[i] + point_to_start_cutting_);
     }
 	
 	contours.push_back(contour);
+
 	//rysowanie konturu
 	if (contour.size() != 0) {
 		drawContours(frame, contours, 0, color, 2, 8);
 	}
 
 	//rysowanie prostokąta zasięgu
-	rectangle( frame, pointToStartCutting, pointToFinishCutting, colorContour, 0, 8 );
+	rectangle( frame, point_to_start_cutting_, point_to_finish_cutting_, colorContour, 0, 8 );
 
 	//rysowanie środka ciężkosci konturu
 	if(!centers.empty())
@@ -169,7 +145,7 @@ Mat ContourFinding::drawPoints(vector<Point> centers){
 		for(int i=0;i<centers.size();i++)
 		{
 			//rysowanie wykrytego środka ciężkosci figury
-			circle(frame, centers[i]+pointToStartCutting, 5, color, -1, 8);
+			circle(frame, centers[i]+point_to_start_cutting_, 5, color, -1, 8);
 		}
 		
 		//rysowanie linii

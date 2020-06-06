@@ -1,10 +1,10 @@
 #all parameters must be double!
 data_publisher:
     ros__parameters:
-        K: 0.3
-        Td: 0.1
+        K: 0.35
         Ti: 50.0
-        const_vel: 50.0
+        Td: 0.1
+        const_vel: 140.0
         vel_up_lim: 70.0
         vel_down_lim: -70.0
 
@@ -15,6 +15,6 @@ data_publisher:
         resolution_factor: 0.5
         detection_threshold: 50.0
 
-        publish_period: 60.0 # ms - give integer in double format 
-        detection_period: 60.0 # ms
-        control_period: 60.0 # ms
+        publish_period: 40.0 # ms - give integer in double format 
+        detection_period: 40.0 # ms
+        control_period: 40.0 # ms

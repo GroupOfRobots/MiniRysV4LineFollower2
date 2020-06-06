@@ -22,17 +22,13 @@
 
 class Detector {
 	private:
-		double roi_up_limit_;
-		double roi_down_limit_;
 		int acquisition_period_;
-		int threshold_;
-		double scale_;
 		std::shared_ptr<ContourFinding> contour_finder_;
 		std::shared_ptr<cv::VideoCapture> clip_capture_;
 		cv::Mat frame_;
 		std::vector<cv::Point> line_centers_;
 		std::mutex mtx_;
-		void runDetection();
+		void run_detection();
 		
 		
 	public:

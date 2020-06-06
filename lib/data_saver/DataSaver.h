@@ -13,19 +13,19 @@ using namespace std;
 
 class DataSaver {
 	private:
-		string pathToSaveData;
-		int frameWidth;
-		int frameHeight;
-		VideoWriter videoWriter;
-		ofstream txtWriter;
-		chrono::steady_clock::time_point start;
+		string path_to_save_data_;
+		int frame_width_;
+		int frame_height_;
+		VideoWriter video_writer_;
+		ofstream txt_writer_;
+		chrono::steady_clock::time_point start_;
 		
 	public:
-		DataSaver(string txtFileName, string recordingFileName, string pathToSaveData, int frameWidth, int frameHeight, int frameInterval);
+		DataSaver(string txt_file_name, string recording_file_name, string path_to_save_data, int frame_width, int frame_height, int frame_interval);
 		~DataSaver();
 		void setFrame(Mat frame);
-		void setDataToTxt(int leftMotor, int rightMotor, int setPoint, int error, int exec_duration);
-		void setData(Mat frame, int leftMotor, int rightMotor, int setPoint, int error, int exec_duration);
+		void setDataToTxt(int left_motor, int right_motor, int set_point, int error, int exec_duration);
+		void setData(Mat frame, int left_motor, int right_motor, int set_point, int error, int exec_duration);
 };
 
 #endif

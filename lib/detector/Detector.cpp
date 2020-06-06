@@ -1,7 +1,7 @@
 #include "Detector.h"
 
-Detector::Detector(double roi_up_limit, double roi_down_limit, double scale, int threshold, int acquisition_period):
-roi_up_limit_(roi_up_limit), roi_down_limit_(roi_down_limit), acquisition_period_(acquisition_period), threshold_(threshold), scale_(scale){
+Detector::Detector(double roi_up_limit, double roi_down_limit, double scale, int threshold, int acquisition_period): 
+acquisition_period_(acquisition_period){
 
 	clip_capture_ = std::make_shared<cv::VideoCapture>(0);
 	auto height = clip_capture_->get(CV_CAP_PROP_FRAME_HEIGHT);
@@ -11,7 +11,6 @@ roi_up_limit_(roi_up_limit), roi_down_limit_(roi_down_limit), acquisition_period
   	clip_capture_->set(CV_CAP_PROP_FRAME_WIDTH, static_cast<int>(width*scale));
 	if (!clip_capture_->isOpened()) throw std::runtime_error("Could not open reference to clip\n");
 	contour_finder_ = std::make_shared<ContourFinding>(roi_up_limit,roi_down_limit);
-	//contour_finder_->setScaleFactor(scale);
 	contour_finder_->setThreshold(threshold);
 }
 
@@ -19,7 +18,7 @@ Detector::~Detector(){
 	clip_capture_->release();
 }
 
-void Detector::runDetection(){
+void Detector::run_detection(){
 	while(1){
 		//auto start1 = chrono::steady_clock::now();
 		auto start = chrono::steady_clock::now();
@@ -73,6 +72,6 @@ int Detector::getImageCenter(){
 }
 
 void Detector::run(){
-	std::thread detector(&Detector::runDetection, this);
+	std::thread detector(&Detector::run_detection, this);
 	detector.detach();
 }

@@ -47,7 +47,7 @@ class Controller {
 		std::vector<cv::Point> line_centers_;
 		int image_center_;
 		std::mutex mtx_;
-		void runControl();
+		void run_control();
 		
 	public:
 		Controller(double K, double Ti, double Td, int uWorkPoint, int uMin, int uMax, std::shared_ptr<Detector> detector, int control_period = 60000);

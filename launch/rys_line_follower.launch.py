@@ -16,7 +16,10 @@ def generate_launch_description():
 
     return LaunchDescription([
     launch_ros.actions.Node(
-            package=package, node_executable='data_pub_example', output='screen',
+            package=package, node_executable='main', output='screen',
             parameters=[full_path + "/src/" + package + "/yaml/data_node_params.yaml"]),
-
+    
+    launch_ros.actions.Node(
+        package=package, node_executable='tmp_node.py', output='screen', 
+        parameters=[full_path + "/src/" + package + "/yaml/tmp_node_params.yaml"]),
     ])

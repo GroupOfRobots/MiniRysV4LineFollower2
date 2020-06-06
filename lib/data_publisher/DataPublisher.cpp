@@ -69,7 +69,7 @@ void DataPublisher::timer_callback()
 }
 
 
-std::map <std::string, double> DataPublisher::get_params(){
+std::map <std::string, double> DataPublisher::getParams(){
     std::map<std::string, double> parameters_map;
     for (auto & parameter : parameters_client_->get_parameters(parameters_)){
         parameters_map.insert(std::pair<std::string, double>(parameter.get_name(), parameter.as_double()));
@@ -77,10 +77,10 @@ std::map <std::string, double> DataPublisher::get_params(){
     return parameters_map;
 }
 
-void DataPublisher::set_controller(std::shared_ptr<Controller> controller){
+void DataPublisher::setController(std::shared_ptr<Controller> controller){
     controller_ = controller;
 }
 
-void DataPublisher::set_detector(std::shared_ptr<Detector> detector){
+void DataPublisher::setDetector(std::shared_ptr<Detector> detector){
     detector_ = detector;
 }

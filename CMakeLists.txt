@@ -42,25 +42,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
    DEPENDENCIES sensor_msgs
 )
 
-set(SOURCES src/main.cpp 
-            lib/bcm2835/bcm2835.c
-            lib/camera/CenterFinding.cpp
-            lib/camera/ContourFinding.cpp
-            lib/data_saver/DataSaver.cpp
-            lib/imu/LSM6DS3.cpp
-            lib/imu/filter.cpp
-            lib/motors/l6470.cpp
-            lib/motors/l6470commands.cpp
-            lib/motors/l6470config.cpp
-            lib/motors/l6470dump.cpp
-            lib/motors/l6470support.cpp
-            lib/motors/motors.cpp
-            lib/pid/Pid.cpp
-            lib/tof/VL53L1X.cpp
-            lib/udp_comm/UdpJpgFrameStreamer.cpp
-            )
-
-set(SOURCES_TEST src/data_pub_example.cpp 
+set(SOURCES_MAIN src/main.cpp 
             lib/camera/ContourFinding.cpp
             lib/detector/Detector.cpp
             lib/controller/Controller.cpp
@@ -77,30 +59,19 @@ set(SOURCES_TEST src/data_pub_example.cpp
             )
 
 set(SOURCES_CLIENT src/client.cpp)
-set(SOURCES_YUV src/yuv.cpp)
 
-add_executable(main ${SOURCES})
-target_link_libraries( main ${Boost_LIBRARIES} ${OpenCV_LIBS})
-ament_target_dependencies(main rclcpp std_msgs)
-
-add_executable(data_pub_example ${SOURCES_TEST})
-target_link_libraries(data_pub_example ${Boost_LIBRARIES} ${OpenCV_LIBS})
-ament_target_dependencies(data_pub_example rclcpp sensor_msgs cv_bridge)
-rosidl_target_interfaces(data_pub_example ${PROJECT_NAME} "rosidl_typesupport_cpp")
+add_executable(main ${SOURCES_MAIN})
+target_link_libraries(main ${Boost_LIBRARIES} ${OpenCV_LIBS})
+ament_target_dependencies(main rclcpp sensor_msgs cv_bridge)
+rosidl_target_interfaces(main ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
 add_executable(client ${SOURCES_CLIENT})
 target_link_libraries(client ${OpenCV_LIBS} ${Boost_LIBRARIES})
 ament_target_dependencies(client rclcpp sensor_msgs)
 
-add_executable(yuv ${SOURCES_YUV})
-target_link_libraries(yuv ${OpenCV_LIBS} ${Boost_LIBRARIES})
-ament_target_dependencies(yuv rclcpp std_msgs)
-
 install(TARGETS
   client
-  yuv
   main
-  data_pub_example
   DESTINATION lib/${PROJECT_NAME})
 
 install(PROGRAMS

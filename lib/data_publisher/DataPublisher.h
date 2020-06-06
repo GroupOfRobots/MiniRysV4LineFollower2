@@ -17,9 +17,9 @@ class DataPublisher : public rclcpp::Node
 {
   public:
     DataPublisher();
-    std::map <std::string, double> get_params();
-    void set_controller(std::shared_ptr<Controller> controller);
-    void set_detector(std::shared_ptr<Detector> detector);
+    std::map <std::string, double> getParams();
+    void setController(std::shared_ptr<Controller> controller);
+    void setDetector(std::shared_ptr<Detector> detector);
 
   private:
     void timer_callback();
