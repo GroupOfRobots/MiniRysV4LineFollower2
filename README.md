@@ -25,7 +25,7 @@ All parameters can be changed in files in `yaml` directory.
 * python smbus module - for temperature node
 
 ## FAQ's
-How to quickly install OpenCV on Raspberry Pi? Run `sudo apt-get install libopencv-dev`.
-How to quickly install Boost on Raspberry Pi? Run `sudo apt-get install libboost-all-dev`.
-How to quickly install ROS2 on Raspberry Pi with Ubuntu Bionic 18.04? See https://index.ros.org/doc/ros2/Installation/Dashing/Linux-Install-Debians/.
-How to install python smbus module? Run `sudo apt-get install python3-smbus`. 
+* How to quickly install OpenCV on Raspberry Pi? Run `sudo apt-get install libopencv-dev`.
+* How to quickly install Boost on Raspberry Pi? Run `sudo apt-get install libboost-all-dev`.
+* How to quickly install ROS2 on Raspberry Pi with Ubuntu Bionic 18.04? See https://index.ros.org/doc/ros2/Installation/Dashing/Linux-Install-Debians/.
+* How to install python smbus module? Run `sudo apt-get install python3-smbus`. 
